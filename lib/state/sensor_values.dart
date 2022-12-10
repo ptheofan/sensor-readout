@@ -22,20 +22,6 @@ final sensorValuesNotifierProviderFamily = FutureProvider.autoDispose.family<Sen
   final Config config = ref.watch(configNotifierProvider);
 
   final SensorConfig sensorConfig = config.sensors.firstWhere((item) => item.uid == uid);
-  final auth = 'Basic ${base64Encode(utf8.encode("${sensorConfig.username}:${sensorConfig.password}"))}';
-  final Map<String, String> queryParams = {
-    'cmnd': 'status 10',
-    'user': sensorConfig.username,
-    'password': sensorConfig.password,
-  };
-  final Uri uri = Uri(
-    scheme: 'http',
-    host: sensorConfig.host,
-    port: sensorConfig.port,
-    path: '/cm',
-    queryParameters: queryParams,
-  );
-  final response = await dio.getUri(uri);
-  print(response.data.toString());
+  final response = await dio.getUri(sensorConfig.uri);
   return SensorValues(pm2: response.data['StatusSNS']['VINDRIKTNING']['PM2.5'] ?? -1);
 });

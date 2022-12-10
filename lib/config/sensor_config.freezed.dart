@@ -176,7 +176,7 @@ class __$$_SensorConfigCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SensorConfig implements _SensorConfig {
+class _$_SensorConfig extends _SensorConfig {
   const _$_SensorConfig(
       {required this.uid,
       required this.name,
@@ -184,7 +184,8 @@ class _$_SensorConfig implements _SensorConfig {
       required this.port,
       required this.username,
       required this.password,
-      required this.type});
+      required this.type})
+      : super._();
 
   factory _$_SensorConfig.fromJson(Map<String, dynamic> json) =>
       _$$_SensorConfigFromJson(json);
@@ -244,7 +245,7 @@ class _$_SensorConfig implements _SensorConfig {
   }
 }
 
-abstract class _SensorConfig implements SensorConfig {
+abstract class _SensorConfig extends SensorConfig {
   const factory _SensorConfig(
       {required final String uid,
       required final String name,
@@ -253,6 +254,7 @@ abstract class _SensorConfig implements SensorConfig {
       required final String username,
       required final String password,
       required final SensorType type}) = _$_SensorConfig;
+  const _SensorConfig._() : super._();
 
   factory _SensorConfig.fromJson(Map<String, dynamic> json) =
       _$_SensorConfig.fromJson;

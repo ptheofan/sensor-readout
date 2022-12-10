@@ -57,107 +57,120 @@ class SensorConfigSheetState extends ConsumerState<SensorConfigSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Form(
-        key: _formKey,
+    return
+      Padding(
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: Column(
-          children: [
-            DropdownButtonFormField<SensorType>(
-              value: _sensorType,
-              decoration: const InputDecoration(labelText: 'Sensor Type'),
-              items: sensorTypes.keys
-                  .map<DropdownMenuItem<SensorType>>((SensorType key) {
-                return DropdownMenuItem<SensorType>(
-                  value: key,
-                  child: Text(sensorTypes[key]!),
-                );
-              }).toList(growable: false),
-              onChanged: (SensorType? newValue) {
-                setState(() {
-                  _sensorType = newValue;
-                });
-              },
-            ),
-            TextFormField(
-              controller: _nameCtrl,
-              decoration: const InputDecoration(labelText: 'Sensor Name'),
-            ),
-            Row(children: <Widget>[
-              Expanded(
-                child: TextFormField(
-                  controller: _hostCtrl,
-                  decoration: const InputDecoration(labelText: 'Host'),
-                ),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Expanded(
-                child: TextFormField(
-                  controller: _portCtrl,
-                  decoration: const InputDecoration(labelText: 'Port'),
-                ),
-              ),
-            ]),
-            Row(children: <Widget>[
-              Expanded(
-                child: TextFormField(
-                  controller: _usernameCtrl,
-                  decoration: const InputDecoration(labelText: 'Username'),
-                ),
-              ),
-              const SizedBox(
-                width: 8,
-              ),
-              Expanded(
-                child: TextFormField(
-                  obscureText: _obscurePassword,
-                  controller: _passwordCtrl,
-                  decoration: InputDecoration(
-                      labelText: 'Password',
-                      suffixIcon: IconButton(
-                          icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
-                          onPressed: () {
-                            setState(() {
-                              _obscurePassword = !_obscurePassword;
-                            });
-                          },
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      DropdownButtonFormField<SensorType>(
+                        value: _sensorType,
+                        decoration: const InputDecoration(labelText: 'Sensor Type'),
+                        items: sensorTypes.keys
+                            .map<DropdownMenuItem<SensorType>>((SensorType key) {
+                          return DropdownMenuItem<SensorType>(
+                            value: key,
+                            child: Text(sensorTypes[key]!),
+                          );
+                        }).toList(growable: false),
+                        onChanged: (SensorType? newValue) {
+                          setState(() {
+                            _sensorType = newValue;
+                          });
+                        },
                       ),
+                      TextFormField(
+                        controller: _nameCtrl,
+                        decoration: const InputDecoration(labelText: 'Sensor Name'),
+                      ),
+                      Row(children: <Widget>[
+                        Expanded(
+                          child: TextFormField(
+                            controller: _hostCtrl,
+                            decoration: const InputDecoration(labelText: 'Host'),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _portCtrl,
+                            decoration: const InputDecoration(labelText: 'Port'),
+                          ),
+                        ),
+                      ]),
+                      Row(children: <Widget>[
+                        Expanded(
+                          child: TextFormField(
+                            controller: _usernameCtrl,
+                            decoration: const InputDecoration(labelText: 'Username'),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        Expanded(
+                          child: TextFormField(
+                            obscureText: _obscurePassword,
+                            controller: _passwordCtrl,
+                            decoration: InputDecoration(
+                                labelText: 'Password',
+                                suffixIcon: IconButton(
+                                    icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
+                                    onPressed: () {
+                                      setState(() {
+                                        _obscurePassword = !_obscurePassword;
+                                      });
+                                    },
+                                ),
+                            ),
+                          ),
+                        ),
+                      ]),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Flexible(
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    // Save data
+                                    saveSensor();
+                                    // Close modal bottom sheet
+                                    Navigator.pop(context);
+                                    // Show snackbar
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                        content:
+                                            Text("Sensor \"${_nameCtrl.text}\" saved!")));
+                                  },
+                                  child: const Text('Save'))),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Flexible(
+                              child: TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Cancel'))),
+                        ],
+                      )
+                    ],
                   ),
                 ),
               ),
-            ]),
-            const SizedBox(
-              height: 16,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Flexible(
-                    child: ElevatedButton(
-                        onPressed: () {
-                          // Save data
-                          saveSensor();
-                          // Close modal bottom sheet
-                          Navigator.pop(context);
-                          // Show snackbar
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content:
-                                  Text("Sensor \"${_nameCtrl.text}\" saved!")));
-                        },
-                        child: const Text('Save'))),
-                const SizedBox(
-                  width: 8,
-                ),
-                Flexible(
-                    child: TextButton(
-                        onPressed: () {}, child: const Text('Cancel'))),
-              ],
-            )
-          ],
+            ],
         ),
-      ),
-    );
+      );
   }
 }

@@ -26,6 +26,7 @@ class ConfigScreen extends ConsumerWidget {
         onPressed: () {
           // open sensor add/edit bottom sheet
           showModalBottomSheet(
+              isScrollControlled: true,
               context: context,
               builder: (context) {
                 return const SensorConfigSheet();
@@ -44,10 +45,14 @@ class ConfigScreen extends ConsumerWidget {
                       style: TextStyle(fontSize: 18),
                     ),
                   )
-                : ListView.builder(
+                : ReorderableListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemCount: config.sensors.length,
+                    onReorder: (oldIndex, newIndex) {
+                      SensorConfig sensor = config.sensors[oldIndex];
+                      ref.read(configNotifierProvider.notifier).reorderSensor(sensor.uid, newIndex);
+                    },
                     itemBuilder: (context, index) {
                       final SensorConfig sensor = config.sensors[index];
                       return Dismissible(
@@ -70,7 +75,6 @@ class ConfigScreen extends ConsumerWidget {
                         },
                         onDismissed: (direction) {
                           if (direction == DismissDirection.endToStart) {
-                            print("Direction = ${DismissDirection.endToStart}");
                             ref.read(configNotifierProvider.notifier).removeSensor(
                                 sensor);
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -81,21 +85,13 @@ class ConfigScreen extends ConsumerWidget {
                           leading: sensorIcons[sensor.type] != null? Image.asset(sensorIcons[sensor.type]!) : const Icon(Icons.no_photography_outlined),
                           title: Text(sensor.name),
                           subtitle: Text("${sensor.host}:${sensor.port}"),
+                          trailing: const Icon(Icons.drag_handle),
                           onTap: () {
                             showModalBottomSheet(
                                 isScrollControlled: true,
                                 context: context,
                                 builder: (context) {
-                                  return Padding(
-                                      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          SensorConfigSheet(sensor: sensor),
-                                        ],
-                                      ),
-                                    );
+                                  return SensorConfigSheet(sensor: sensor);
                                 });
                           },
                         ),

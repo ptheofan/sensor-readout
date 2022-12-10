@@ -4,8 +4,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:insta_sensors/config/sensor_config.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-import '../state/sensor_values.dart';
 part 'config.freezed.dart';
 part 'config.g.dart';
 
@@ -57,8 +55,7 @@ class ConfigNotifier extends _$ConfigNotifier {
 
   Future<void> setSensor(SensorConfig sensor) async {
     try {
-      SensorConfig existingSensor = state.sensors.firstWhere((item) =>
-      item.uid == sensor.uid);
+      SensorConfig existingSensor = state.sensors.firstWhere((item) => item.uid == sensor.uid);
       // Replace existing item
       List<SensorConfig> sensorsCopy = [...state.sensors];
       int idx = sensorsCopy.indexOf(existingSensor);
@@ -70,7 +67,7 @@ class ConfigNotifier extends _$ConfigNotifier {
       state = state.copyWith(sensors: [...state.sensors, sensor]);
     }
     await _saveConfig();
-    ref.refresh(configNotifierProvider);
+    ref.notifyListeners();
   }
 
   Future<void> removeSensor(SensorConfig sensor) async {
@@ -78,5 +75,19 @@ class ConfigNotifier extends _$ConfigNotifier {
     sensorsCopy.removeWhere((item) => item.uid == sensor.uid);
     state = state.copyWith(sensors: sensorsCopy);
     _saveConfig();
+    ref.notifyListeners();
+  }
+
+  Future<void> reorderSensor(String uid, int newIndex) async {
+    List<SensorConfig> sensorsCopy = [...state.sensors];
+    final oldIndex = sensorsCopy.indexWhere((item) => item.uid == uid, -1);
+    if (oldIndex == -1) {
+      return;
+    }
+    final item = sensorsCopy.removeAt(oldIndex);
+    sensorsCopy.insert(newIndex, item);
+    state = state.copyWith(sensors: sensorsCopy);
+    _saveConfig();
+    ref.notifyListeners();
   }
 }

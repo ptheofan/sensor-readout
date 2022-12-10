@@ -16,6 +16,7 @@ const sensorIcons = {
 
 @freezed
 class SensorConfig with _$SensorConfig {
+  const SensorConfig._();
   const factory SensorConfig({
     required String uid,
     required String name,
@@ -27,4 +28,18 @@ class SensorConfig with _$SensorConfig {
   }) = _SensorConfig;
 
   factory SensorConfig.fromJson(Map<String, Object?> json) => _$SensorConfigFromJson(json);
+
+  get uri {
+    return Uri(
+      scheme: 'http',
+      host: host,
+      port: port,
+      path: '/cm',
+      queryParameters: {
+        'cmnd': 'status 10',
+        if (username.isNotEmpty) 'user': username,
+        if (password.isNotEmpty) 'password': password,
+      },
+    );
+  }
 }
