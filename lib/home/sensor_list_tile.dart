@@ -104,7 +104,6 @@ class SensorListTile extends ConsumerWidget {
       ),
       title: Text(sensor.name),
       subtitle: Text("${sensor.host}:${sensor.port}"),
-
       onTap: () {
         // Refresh the individual sensor
         ref.invalidate(sensorValuesNotifierProviderFamily(sensor.uid));

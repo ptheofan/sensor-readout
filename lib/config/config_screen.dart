@@ -27,6 +27,9 @@ class ConfigScreen extends ConsumerWidget {
           // open sensor add/edit bottom sheet
           showModalBottomSheet(
               isScrollControlled: true,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+              ),
               context: context,
               builder: (context) {
                 return const SensorConfigSheet();
@@ -89,6 +92,9 @@ class ConfigScreen extends ConsumerWidget {
                           onTap: () {
                             showModalBottomSheet(
                                 isScrollControlled: true,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+                                ),
                                 context: context,
                                 builder: (context) {
                                   return SensorConfigSheet(sensor: sensor);
