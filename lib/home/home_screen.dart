@@ -1,8 +1,8 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:insta_sensors/config/config_screen.dart';
+import 'package:insta_sensors/home/sensor_details.dart';
 import 'package:insta_sensors/home/sensor_list_tile.dart';
 
 import '../config/config.dart';
@@ -27,6 +27,7 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final Config config = ref.watch(configNotifierProvider);
+    final SensorConfig? selectedSensor = ref.watch(selectedSensorProvider);
 
     return RefreshIndicator(
       onRefresh: () async {
@@ -36,55 +37,70 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         appBar: AppBar(
           title: const Text('Insta Readings'),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const ConfigScreen()));
-          },
-          child: const Icon(Icons.settings),
-        ),
-        body: config.sensors.isEmpty
-            ? const Center(
-                child: Text(
-                  'No sensors have been configured.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18),
-                ),
-              )
-            : ListView.builder(
-                itemCount: config.sensors.length,
-                itemBuilder: (context, index) {
-                  final SensorConfig sensor = config.sensors[index];
-                  // var values = ref.watch(sensorValuesNotifierProviderFamily(sensor.uid));
-
-                  return Dismissible(
-                    key: Key(sensor.uid),
-                    background: Container(),
-                    secondaryBackground: Container(
-                      color: Colors.green,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
-                            Icon(Icons.refresh, color: Colors.white),
-                          ],
+        bottomSheet: const SensorDetails(),
+        body: Stack(children: [
+          config.sensors.isEmpty
+              ? const Center(
+                  child: Text(
+                    'No sensors have been configured.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18),
+                  ),
+                )
+              : GestureDetector(
+                  onTap: () {
+                    ref.read(selectedSensorProvider.notifier).state = null;
+                  },
+                  child: ListView.builder(
+                    itemCount: config.sensors.length,
+                    itemBuilder: (context, index) {
+                      final SensorConfig sensor = config.sensors[index];
+                      return Dismissible(
+                        key: Key(sensor.uid),
+                        background: Container(),
+                        secondaryBackground: Container(
+                          color: Colors.green,
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: const [
+                                Icon(Icons.refresh, color: Colors.white),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    confirmDismiss: (direction) async {
-                      return direction == DismissDirection.endToStart;
+                        confirmDismiss: (direction) async {
+                          return direction == DismissDirection.endToStart;
+                        },
+                        onDismissed: (direction) {
+                          if (direction == DismissDirection.endToStart) {
+                            ref.invalidate(
+                                sensorValuesNotifierProviderFamily(sensor.uid));
+                          }
+                        },
+                        child: SensorListTile(sensor: sensor),
+                      );
                     },
-                    onDismissed: (direction) {
-                      if (direction == DismissDirection.endToStart) {
-                        ref.invalidate(sensorValuesNotifierProviderFamily(sensor.uid));
-                      }
-                    },
-                    child: SensorListTile(sensor: sensor),
-                  );
+                  ),
+                ),
+            Positioned(
+              bottom: 50,
+              right: 15,
+              child: selectedSensor == null ? FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ConfigScreen()));
                 },
-              ),
+                child: const Icon(Icons.settings),
+              ) : Container(),
+            )
+        ]),
       ),
     );
   }
 }
+
+final selectedSensorProvider = StateProvider<SensorConfig?>((ref) => null);

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gauges/gauges.dart';
+import 'package:insta_sensors/home/gauge_vindrikthing.dart';
 
 import '../config/sensor_config.dart';
 import '../state/sensor_values.dart';
+import 'home_screen.dart';
 
 class SensorListTile extends ConsumerWidget {
   const SensorListTile({Key? key, required this.sensor}) : super(key: key);
@@ -26,65 +28,13 @@ class SensorListTile extends ConsumerWidget {
             if (v.pm2 < 0) {
               return const Text('Unreadable');
             } else {
-              return RadialGauge(
-                axes: [
-                  RadialGaugeAxis(
-                    color: Colors.transparent,
-                    minValue: 0,
-                    maxValue: 1000,
-                    minAngle: -150,
-                    maxAngle: 150,
-                    radius: 0.6,
-                    width: 0.2,
-                    segments: [
-                      const RadialGaugeSegment(
-                        minValue: 0,
-                        maxValue: 12,
-                        minAngle: -150,
-                        maxAngle: -100,
-                        color: Colors.green,
-                      ),
-                      const RadialGaugeSegment(
-                        minValue: 13,
-                        maxValue: 35,
-                        minAngle: -99,
-                        maxAngle: -40,
-                        color: Colors.yellow,
-                      ),
-                      const RadialGaugeSegment(
-                        minValue: 36,
-                        maxValue: 150,
-                        minAngle: -39,
-                        maxAngle: 20,
-                        color: Colors.orange,
-                      ),
-                      const RadialGaugeSegment(
-                        minValue: 151,
-                        maxValue: 250,
-                        minAngle: 21,
-                        maxAngle: 80,
-                        color: Colors.purple,
-                      ),
-                      const RadialGaugeSegment(
-                        minValue: 251,
-                        maxValue: 1000,
-                        minAngle: 81,
-                        maxAngle: 150,
-                        color: Colors.red,
-                      ),
-                    ],
-                    pointers: [
-                      RadialNeedlePointer(
-                        value: v.pm2.toDouble(),
-                        thicknessStart: 6,
-                        thicknessEnd: 0,
-                        length: 0.6,
-                        knobRadius: 0.1,
-                      ),
-                    ]
-                  ),
-                ],
-              );
+              return GaugeVindrikthing(radialNeedlePointer: RadialNeedlePointer(
+                value: v.pm2.toDouble(),
+                thicknessStart: 6,
+                thicknessEnd: 0,
+                length: 0.6,
+                knobRadius: 0.1,
+              ));
             }
 
             // if (v.pm2 < 0) {
@@ -107,6 +57,7 @@ class SensorListTile extends ConsumerWidget {
       onTap: () {
         // Refresh the individual sensor
         ref.invalidate(sensorValuesNotifierProviderFamily(sensor.uid));
+        ref.read(selectedSensorProvider.notifier).state = sensor;
       },
     );
   }
