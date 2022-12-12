@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gauges/gauges.dart';
 import 'package:insta_sensors/home/gauge_vindrikthing.dart';
+import 'package:insta_sensors/home/sensor_details.dart';
 
 import '../config/sensor_config.dart';
 import '../state/sensor_values.dart';
@@ -9,7 +10,6 @@ import 'home_screen.dart';
 
 class SensorListTile extends ConsumerWidget {
   const SensorListTile({Key? key, required this.sensor}) : super(key: key);
-
   final SensorConfig sensor;
 
   @override
@@ -58,6 +58,7 @@ class SensorListTile extends ConsumerWidget {
         // Refresh the individual sensor
         ref.invalidate(sensorValuesNotifierProviderFamily(sensor.uid));
         ref.read(selectedSensorProvider.notifier).state = sensor;
+        Scaffold.of(context).showBottomSheet((context) => const SensorDetails());
       },
     );
   }

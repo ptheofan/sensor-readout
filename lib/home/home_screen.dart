@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:insta_sensors/config/config_screen.dart';
-import 'package:insta_sensors/home/sensor_details.dart';
 import 'package:insta_sensors/home/sensor_list_tile.dart';
 
 import '../config/config.dart';
@@ -37,7 +35,6 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
         appBar: AppBar(
           title: const Text('Insta Readings'),
         ),
-        bottomSheet: const SensorDetails(),
         body: Stack(children: [
           config.sensors.isEmpty
               ? const Center(
@@ -47,43 +44,38 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                     style: TextStyle(fontSize: 18),
                   ),
                 )
-              : GestureDetector(
-                  onTap: () {
-                    ref.read(selectedSensorProvider.notifier).state = null;
-                  },
-                  child: ListView.builder(
-                    itemCount: config.sensors.length,
-                    itemBuilder: (context, index) {
-                      final SensorConfig sensor = config.sensors[index];
-                      return Dismissible(
-                        key: Key(sensor.uid),
-                        background: Container(),
-                        secondaryBackground: Container(
-                          color: Colors.green,
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: const [
-                                Icon(Icons.refresh, color: Colors.white),
-                              ],
-                            ),
-                          ),
+              : ListView.builder(
+                itemCount: config.sensors.length,
+                itemBuilder: (context, index) {
+                  final SensorConfig sensor = config.sensors[index];
+                  return Dismissible(
+                    key: Key(sensor.uid),
+                    background: Container(),
+                    secondaryBackground: Container(
+                      color: Colors.green,
+                      child: Padding(
+                        padding: const EdgeInsets.all(15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: const [
+                            Icon(Icons.refresh, color: Colors.white),
+                          ],
                         ),
-                        confirmDismiss: (direction) async {
-                          return direction == DismissDirection.endToStart;
-                        },
-                        onDismissed: (direction) {
-                          if (direction == DismissDirection.endToStart) {
-                            ref.invalidate(
-                                sensorValuesNotifierProviderFamily(sensor.uid));
-                          }
-                        },
-                        child: SensorListTile(sensor: sensor),
-                      );
+                      ),
+                    ),
+                    confirmDismiss: (direction) async {
+                      return direction == DismissDirection.endToStart;
                     },
-                  ),
-                ),
+                    onDismissed: (direction) {
+                      if (direction == DismissDirection.endToStart) {
+                        ref.invalidate(
+                            sensorValuesNotifierProviderFamily(sensor.uid));
+                      }
+                    },
+                    child: SensorListTile(sensor: sensor),
+                  );
+                },
+              ),
             Positioned(
               bottom: 50,
               right: 15,
@@ -103,4 +95,4 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   }
 }
 
-final selectedSensorProvider = StateProvider<SensorConfig?>((ref) => null);
+final selectedSensorProvider = StateProvider.autoDispose<SensorConfig?>((ref) => null);
