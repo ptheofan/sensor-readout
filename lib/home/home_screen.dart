@@ -93,6 +93,9 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                 key: homeBottomSheetKey,
                 background: const SizedBox(),
                 expandableContent: const SensorDetails(),
+                onIsContractedCallback: () {
+                  ref.read(selectedSensorProvider.notifier).state = null;
+                },
               ),
             ],
           ),
