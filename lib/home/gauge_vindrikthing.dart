@@ -62,8 +62,8 @@ class GaugeVindrikthing extends StatelessWidget {
         ranges.add(GaugeRange(
           startValue: maxt,
           endValue: maxt + range.width,
-          startWidth: miniMode ? 4 : 10,
-          endWidth: miniMode ? 4 : 10,
+          startWidth: miniMode ? 4 : 20,
+          endWidth: miniMode ? 4 : 20,
           color: range.color,
           // label: range.label,
           // labelStyle: GaugeTextStyle(
