@@ -6,5 +6,8 @@
     "valueLabelUnhealthy": "Ανθυγιεινή",
     "valueLabelVeryUnhealthy": "Άκρως Ανθυγιεινή",
     "valueLabelHazardous": "Επικίνδυνη"
+  },
+  "homeScreen": {
+    "noSensorsConfigured": "Δεν έχουν ρυθμιστεί αισθητήρες"
   }
 }

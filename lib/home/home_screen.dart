@@ -1,6 +1,9 @@
+import 'package:expandable_bottom_sheet/expandable_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:insta_sensors/config/config_screen.dart';
+import 'package:insta_sensors/home/home_empty.dart';
+import 'package:insta_sensors/home/sensor_details.dart';
 import 'package:insta_sensors/home/sensor_list_tile.dart';
 
 import '../config/config.dart';
@@ -27,37 +30,33 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
     final Config config = ref.watch(configNotifierProvider);
     final SensorConfig? selectedSensor = ref.watch(selectedSensorProvider);
 
-    return RefreshIndicator(
-      onRefresh: () async {
-        ref.invalidate(sensorValuesNotifierProviderFamily);
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Sensor Now'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sensor Now'),
+      ),
+      floatingActionButton: Opacity(
+        opacity: selectedSensor == null ? 1 : 0,
+        child: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const ConfigScreen()));
+          },
+          child: const Icon(Icons.settings),
         ),
-        floatingActionButton: Opacity(
-          opacity: selectedSensor == null ? 1 : 0,
-          child: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ConfigScreen()));
-            },
-            child: const Icon(Icons.settings),
-          ),
-        ),
-        body: SafeArea(
-          child: Stack(children: [
-            config.sensors.isEmpty
-                ? const Center(
-                    child: Text(
-                      'No sensors have been configured.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  )
-                : ListView.builder(
+      ),
+      body: Builder(builder: (context) {
+        if (config.sensors.isEmpty) {
+          return const HomeEmpty();
+        }
+
+        return RefreshIndicator(
+          onRefresh: () async {
+            ref.invalidate(sensorValuesNotifierProviderFamily);
+          },
+          child: Stack(
+            children: [
+              SafeArea(
+                child: ListView.builder(
                   itemCount: config.sensors.length,
                   itemBuilder: (context, index) {
                     final SensorConfig sensor = config.sensors[index];
@@ -89,11 +88,21 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                     );
                   },
                 ),
-          ]),
-        ),
-      ),
+              ),
+              ExpandableBottomSheet(
+                key: homeBottomSheetKey,
+                background: const SizedBox(),
+                expandableContent: const SensorDetails(),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }
 
-final selectedSensorProvider = StateProvider.autoDispose<SensorConfig?>((ref) => null);
+final selectedSensorProvider =
+    StateProvider.autoDispose<SensorConfig?>((ref) => null);
+
+final GlobalKey<ExpandableBottomSheetState> homeBottomSheetKey = GlobalKey();

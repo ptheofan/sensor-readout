@@ -6,5 +6,8 @@
     "valueLabelUnhealthy": "Unhealthy",
     "valueLabelVeryUnhealthy": "Very Unhealthy",
     "valueLabelHazardous": "Hazardous"
+  },
+  "homeScreen": {
+    "noSensorsConfigured": "No sensors have been configured."
   }
 }

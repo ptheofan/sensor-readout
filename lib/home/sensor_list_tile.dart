@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:insta_sensors/home/gauge_vindrikthing.dart';
-import 'package:insta_sensors/home/sensor_details.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../config/sensor_config.dart';
@@ -41,16 +40,8 @@ class SensorListTile extends ConsumerWidget {
       subtitle: Text("${sensor.host}:${sensor.port}"),
       onTap: () {
         // Refresh the individual sensor
-        ref.invalidate(sensorValuesNotifierProviderFamily(sensor.uid));
         ref.read(selectedSensorProvider.notifier).state = sensor;
-        // CustomBottomSheet.show(
-        //   context: context,
-        //   child: const SensorDetails(),
-        //   barrierColor: Colors.black.withOpacity(1),
-        //   pillColor: Colors.blue,
-        //   backgroundColor: Colors.transparent,
-        // );
-        Scaffold.of(context).showBottomSheet((context) => const SensorDetails());
+        homeBottomSheetKey.currentState?.expand();
       },
     );
   }
