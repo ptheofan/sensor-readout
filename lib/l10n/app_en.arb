@@ -1,17 +1,9 @@
 {
-    "Vindrikthing value classification as good": {
-        "vindrikthingGood": "Good"
-    },
-    "Vindrikthing value classification as moderate": {
-        "vindrikthingModerate": "Moderate"
-    },
-    "Vindrikthing value classification as unhealthy": {
-        "vindrikthingUnhealthy": "Unhealthy"
-    },
-    "Vindrikthing value classification as very unhealthy": {
-        "vindrikthingVeryUnhealthy": "Very Unhealthy"
-    },
-    "Vindrikthing value classification as hazardous": {
-        "vindrikthingHazardous": "Hazardous"
+    "vindrikthingValueLabel": {
+        "good": "Good",
+        "moderate": "Moderate",
+        "unhealthy": "Unhealthy",
+        "veryUnhealthy": "Very Unhealthy",
+        "hazardous": "Hazardous"
     }
 }
