@@ -38,11 +38,11 @@ class GaugeVindrikthing extends StatelessWidget {
       : super(key: key);
 
   final List<RangeMap> rangeMap = [
-    RangeMap(0, 12, 200, color: Colors.green, label: 'Good'),
-    RangeMap(12, 35, 200, color: Colors.yellow, label: 'Moderate'),
-    RangeMap(35, 150, 200, color: Colors.orange, label: 'Unhealthy'),
-    RangeMap(150, 250, 200, color: Colors.purple, label: 'Very Unhealthy'),
-    RangeMap(200, 1000, 200, color: Colors.red, label: 'Hazardous'),
+    RangeMap(0, 12, 200, color: Colors.green, label: 'vindrikthing-good'),
+    RangeMap(12, 35, 200, color: Colors.yellow, label: 'vindrikthing-moderate'),
+    RangeMap(35, 150, 200, color: Colors.orange, label: 'vindrikthing-unhealthy'),
+    RangeMap(150, 250, 200, color: Colors.purple, label: 'vindrikthing-very-unhealthy'),
+      RangeMap(200, 1000, 200, color: Colors.red, label: 'vindrikthing-hazardous'),
   ];
 
   List<GaugeRange> _getRanges() {
