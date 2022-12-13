@@ -33,63 +33,64 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Insta Readings'),
+          title: const Text('Sensor Now'),
         ),
-        body: Stack(children: [
-          config.sensors.isEmpty
-              ? const Center(
-                  child: Text(
-                    'No sensors have been configured.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                )
-              : ListView.builder(
-                itemCount: config.sensors.length,
-                itemBuilder: (context, index) {
-                  final SensorConfig sensor = config.sensors[index];
-                  return Dismissible(
-                    key: Key(sensor.uid),
-                    background: Container(),
-                    secondaryBackground: Container(
-                      color: Colors.green,
-                      child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
-                            Icon(Icons.refresh, color: Colors.white),
-                          ],
+        floatingActionButton: Opacity(
+          opacity: selectedSensor == null ? 1 : 0,
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ConfigScreen()));
+            },
+            child: const Icon(Icons.settings),
+          ),
+        ),
+        body: SafeArea(
+          child: Stack(children: [
+            config.sensors.isEmpty
+                ? const Center(
+                    child: Text(
+                      'No sensors have been configured.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18),
+                    ),
+                  )
+                : ListView.builder(
+                  itemCount: config.sensors.length,
+                  itemBuilder: (context, index) {
+                    final SensorConfig sensor = config.sensors[index];
+                    return Dismissible(
+                      key: Key(sensor.uid),
+                      background: Container(),
+                      secondaryBackground: Container(
+                        color: Colors.green,
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: const [
+                              Icon(Icons.refresh, color: Colors.white),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    confirmDismiss: (direction) async {
-                      return direction == DismissDirection.endToStart;
-                    },
-                    onDismissed: (direction) {
-                      if (direction == DismissDirection.endToStart) {
-                        ref.invalidate(
-                            sensorValuesNotifierProviderFamily(sensor.uid));
-                      }
-                    },
-                    child: SensorListTile(sensor: sensor),
-                  );
-                },
-              ),
-            Positioned(
-              bottom: 50,
-              right: 15,
-              child: selectedSensor == null ? FloatingActionButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ConfigScreen()));
-                },
-                child: const Icon(Icons.settings),
-              ) : Container(),
-            )
-        ]),
+                      confirmDismiss: (direction) async {
+                        return direction == DismissDirection.endToStart;
+                      },
+                      onDismissed: (direction) {
+                        if (direction == DismissDirection.endToStart) {
+                          ref.invalidate(
+                              sensorValuesNotifierProviderFamily(sensor.uid));
+                        }
+                      },
+                      child: SensorListTile(sensor: sensor),
+                    );
+                  },
+                ),
+          ]),
+        ),
       ),
     );
   }

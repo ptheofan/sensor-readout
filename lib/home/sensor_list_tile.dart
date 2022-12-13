@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gauges/gauges.dart';
 import 'package:insta_sensors/home/gauge_vindrikthing.dart';
 import 'package:insta_sensors/home/sensor_details.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 import '../config/sensor_config.dart';
 import '../state/sensor_values.dart';
@@ -28,28 +28,13 @@ class SensorListTile extends ConsumerWidget {
             if (v.pm2 < 0) {
               return const Text('Unreadable');
             } else {
-              return GaugeVindrikthing(radialNeedlePointer: RadialNeedlePointer(
-                value: v.pm2.toDouble(),
-                thicknessStart: 6,
-                thicknessEnd: 0,
-                length: 0.6,
-                knobRadius: 0.1,
-              ));
+              return SizedBox(
+                width: 100,
+                child: GaugeVindrikthing(radialNeedlePointer: NeedlePointer(
+                  value: v.pm2.toDouble(),
+                )),
+              );
             }
-
-            // if (v.pm2 < 0) {
-            //   return const Text('Unreadable');
-            // } else if (v.pm2 <= 12) {
-            //   return const Text('Good', style: TextStyle(color: Colors.green));
-            // } else if (v.pm2 <= 35) {
-            //   return const Text('Moderate', style: TextStyle(color: Colors.yellow));
-            // } else if (v.pm2 <= 150) {
-            //   return const Text('Unhealthy', style: TextStyle(color: Colors.orange));
-            // } else if (v.pm2 <= 250) {
-            //   return const Text('Very Unhealthy', style: TextStyle(color: Colors.purple));
-            // } else {
-            //   return const Text('Hazardous', style: TextStyle(color: Colors.red));
-            // }
           }
       ),
       title: Text(sensor.name),
@@ -58,6 +43,13 @@ class SensorListTile extends ConsumerWidget {
         // Refresh the individual sensor
         ref.invalidate(sensorValuesNotifierProviderFamily(sensor.uid));
         ref.read(selectedSensorProvider.notifier).state = sensor;
+        // CustomBottomSheet.show(
+        //   context: context,
+        //   child: const SensorDetails(),
+        //   barrierColor: Colors.black.withOpacity(1),
+        //   pillColor: Colors.blue,
+        //   backgroundColor: Colors.transparent,
+        // );
         Scaffold.of(context).showBottomSheet((context) => const SensorDetails());
       },
     );
