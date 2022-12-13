@@ -1,26 +1,17 @@
 {
-    "vindrikthingGood": "Good",
-    "@vindrikthingGood": {
-      "description": "Vindrikthing value classification as good"
+    "Vindrikthing value classification as good": {
+        "vindrikthingGood": "Good"
     },
-
-    "vindrikthingModerate": "Moderate",
-    "@vindrikthingModerate": {
-      "description": "Vindrikthing value classification as moderate"
+    "Vindrikthing value classification as moderate": {
+        "vindrikthingModerate": "Moderate"
     },
-
-    "vindrikthingUnhealthy": "Unhealthy",
-    "@vindrikthingUnhealthy": {
-      "description": "Vindrikthing value classification as unhealthy"
+    "Vindrikthing value classification as unhealthy": {
+        "vindrikthingUnhealthy": "Unhealthy"
     },
-
-    "vindrikthingVeryUnhealthy": "Very Unhealthy",
-    "@vindrikthingVeryUnhealthy": {
-      "description": "Vindrikthing value classification as very unhealthy"
+    "Vindrikthing value classification as very unhealthy": {
+        "vindrikthingVeryUnhealthy": "Very Unhealthy"
     },
-
-    "vindrikthingHazardous": "Hazardous",
-    "@vindrikthingHazardous": {
-      "description": "Vindrikthing value classification as hazardous"
+    "Vindrikthing value classification as hazardous": {
+        "vindrikthingHazardous": "Hazardous"
     }
 }
