@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -32,17 +33,20 @@ class GaugeVindrikthing extends StatelessWidget {
   final bool miniMode;
 
   GaugeVindrikthing(
-      {required this.radialNeedlePointer,
-      this.miniMode = true,
-      Key? key})
+      {required this.radialNeedlePointer, this.miniMode = true, Key? key})
       : super(key: key);
 
   final List<RangeMap> rangeMap = [
-    RangeMap(0, 12, 200, color: Colors.green, label: 'vindrikthing-good'),
-    RangeMap(12, 35, 200, color: Colors.yellow, label: 'vindrikthing-moderate'),
-    RangeMap(35, 150, 200, color: Colors.orange, label: 'vindrikthing-unhealthy'),
-    RangeMap(150, 250, 200, color: Colors.purple, label: 'vindrikthing-very-unhealthy'),
-      RangeMap(200, 1000, 200, color: Colors.red, label: 'vindrikthing-hazardous'),
+    RangeMap(0, 12, 200,
+        color: Colors.green, label: 'vindrikthing.valueLabelGood'),
+    RangeMap(12, 35, 200,
+        color: Colors.yellow, label: 'vindrikthing.valueLabelModerate'),
+    RangeMap(35, 150, 200,
+        color: Colors.orange, label: 'vindrikthing.valueLabelUnhealthy'),
+    RangeMap(150, 250, 200,
+        color: Colors.purple, label: 'vindrikthing.valueLabelVeryUnhealthy'),
+    RangeMap(200, 1000, 200,
+        color: Colors.red, label: 'vindrikthing.valueLabelHazardous'),
   ];
 
   List<GaugeRange> _getRanges() {
@@ -74,7 +78,6 @@ class GaugeVindrikthing extends StatelessWidget {
         ));
       }
 
-
       maxt += range.width;
     }
 
@@ -96,7 +99,8 @@ class GaugeVindrikthing extends StatelessWidget {
   }
 
   RangeMap? _range(double value) {
-    return rangeMap.firstWhere((element) => value >= element.min && value <= element.max);
+    return rangeMap
+        .firstWhere((element) => value >= element.min && value <= element.max);
   }
 
   Color? _color(double value) {
@@ -116,13 +120,15 @@ class GaugeVindrikthing extends StatelessWidget {
   }
 
   Text _textAnnotation(double value) {
-    const TextStyle textStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
+    const TextStyle textStyle =
+        TextStyle(fontSize: 16, fontWeight: FontWeight.bold);
 
     if (value < 0) {
-      return const Text('(Unreadable)', style: textStyle);
+      return Text('(${"vindrikthing.valueLabelUnreadable".tr()})', style: textStyle);
     }
 
-    return Text('${_label(value)} (${value.toInt()})', style: textStyle.copyWith(color: _color(value)));
+    return Text('${_label(value)?.tr()} (${value.toInt()})',
+        style: textStyle.copyWith(color: _color(value)));
   }
 
   @override

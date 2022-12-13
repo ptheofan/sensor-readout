@@ -1,0 +1,10 @@
+{
+  "vindrikthing": {
+    "valueLabelUnreadable": "Unreadable",
+    "valueLabelGood": "Good",
+    "valueLabelModerate": "Moderate",
+    "valueLabelUnhealthy": "Unhealthy",
+    "valueLabelVeryUnhealthy": "Very Unhealthy",
+    "valueLabelHazardous": "Hazardous"
+  }
+}

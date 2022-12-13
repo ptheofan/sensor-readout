@@ -1,13 +1,18 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:insta_sensors/home/home_screen.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void main() {
-  runApp(const ProviderScope(
-      child: App()
-  ));
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  runApp(EasyLocalization(
+      assetLoader: JsonAssetLoader(),
+      supportedLocales: const [Locale('en'), Locale('el')],
+      path: 'assets/locales',
+      child: const ProviderScope(child: App())));
 }
 
 class App extends ConsumerWidget {
@@ -19,16 +24,9 @@ class App extends ConsumerWidget {
     return MaterialApp(
       title: 'Insta Readings',
       debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        AppLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en', ''), // English, no country code
-        Locale('el', ''), // Spanish, no country code
-      ],
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       theme: ThemeData(
         // This is the theme of your application.
         //

@@ -1,0 +1,10 @@
+{
+  "vindrikthing": {
+    "valueLabelUnreadable": "Μη Αναγνώσιμη",
+    "valueLabelGood": "Καλή",
+    "valueLabelModerate": "Μέτρια",
+    "valueLabelUnhealthy": "Ανθυγιεινή",
+    "valueLabelVeryUnhealthy": "Άκρως Ανθυγιεινή",
+    "valueLabelHazardous": "Επικίνδυνη"
+  }
+}

@@ -1,9 +1,0 @@
-{
-    "vindrikthingValueLabel": {
-        "good": "Good",
-        "moderate": "Moderate",
-        "unhealthy": "Unhealthy",
-        "veryUnhealthy": "Very Unhealthy",
-        "hazardous": "Hazardous"
-    }
-}

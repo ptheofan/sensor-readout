@@ -1,9 +1,0 @@
-{
-    "vindrikthingValueLabel": {
-        "good": "Καλή",
-        "moderate": "Μέτρια",
-        "unhealthy": "Ανθυγιεινή",
-        "veryUnhealthy": "Άκρως Ανθυγιεινή",
-        "hazardous": "Επικίνδυνη"
-    }
-}
