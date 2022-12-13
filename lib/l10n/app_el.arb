@@ -1,17 +1,9 @@
 {
-    "Vindrikthing value classification as good": {
-        "vindrikthingGood": "Καλή"
-    },
-    "Vindrikthing value classification as moderate": {
-        "vindrikthingModerate": "Μέτρια"
-    },
-    "Vindrikthing value classification as unhealthy": {
-        "vindrikthingUnhealthy": "Ανθυγιεινή"
-    },
-    "Vindrikthing value classification as very unhealthy": {
-        "vindrikthingVeryUnhealthy": "'Ακρως Ανθυγιεινή"
-    },
-    "Vindrikthing value classification as hazardous": {
-        "vindrikthingHazardous": "Επικίνδυνη"
+    "vindrikthingValueLabel": {
+        "good": "Καλή",
+        "moderate": "Μέτρια",
+        "unhealthy": "Ανθυγιεινή",
+        "veryUnhealthy": "Άκρως Ανθυγιεινή",
+        "hazardous": "Επικίνδυνη"
     }
 }
