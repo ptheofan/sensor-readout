@@ -7,7 +7,20 @@
     "valueLabelVeryUnhealthy": "Άκρως Ανθυγιεινή",
     "valueLabelHazardous": "Επικίνδυνη"
   },
-  "homeScreen": {
-    "noSensorsConfigured": "Δεν έχουν ρυθμιστεί αισθητήρες"
+  "messages": {
+    "noSensorsConfigured": "No sensors have been configured.",
+    "sensorConfigSaved": "Sensor \"{sensorName}\" saved!"
+  },
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "sensorConfigForm": {
+    "sensorType": "Sensor Type",
+    "sensorName": "Sensor Name",
+    "host": "Host",
+    "port": "Port",
+    "username": "Username",
+    "password": "Password"
   }
 }

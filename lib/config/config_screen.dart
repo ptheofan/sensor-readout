@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:insta_sensors/config/config.dart';
 import 'package:insta_sensors/config/sensor_config_sheet.dart';
 
+import 'config_empty.dart';
 import 'sensor_config.dart';
 
 class ConfigScreen extends ConsumerWidget {
@@ -41,13 +42,7 @@ class ConfigScreen extends ConsumerWidget {
         child: Column(
           children: [
             config.sensors.isEmpty
-                ? const Center(
-                    child: Text(
-                      'No sensors have been configured.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  )
+                ? const ConfigEmpty()
                 : ReorderableListView.builder(
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,

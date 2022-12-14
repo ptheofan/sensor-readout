@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class HomeEmpty extends ConsumerWidget {
-  const HomeEmpty({Key? key}) : super(key: key);
+class ConfigEmpty extends ConsumerWidget {
+  const ConfigEmpty({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

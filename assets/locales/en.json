@@ -7,7 +7,20 @@
     "valueLabelVeryUnhealthy": "Very Unhealthy",
     "valueLabelHazardous": "Hazardous"
   },
-  "homeScreen": {
-    "noSensorsConfigured": "No sensors have been configured."
+  "messages": {
+    "noSensorsConfigured": "No sensors have been configured.",
+    "sensorConfigSaved": "Sensor \"{sensorName}\" saved!"
+  },
+  "buttons": {
+    "save": "Save",
+    "cancel": "Cancel"
+  },
+  "sensorConfigForm": {
+    "sensorType": "Sensor Type",
+    "sensorName": "Sensor Name",
+    "host": "Host",
+    "port": "Port",
+    "username": "Username",
+    "password": "Password"
   }
 }

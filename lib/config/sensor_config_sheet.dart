@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:insta_sensors/config/sensor_config.dart';
 import 'package:uuid/uuid.dart';
@@ -72,7 +71,7 @@ class SensorConfigSheetState extends ConsumerState<SensorConfigSheet> {
                     children: [
                       DropdownButtonFormField<SensorType>(
                         value: _sensorType,
-                        decoration: const InputDecoration(labelText: 'Sensor Type'),
+                        decoration: InputDecoration(labelText: 'sensorConfigForm.sensorType'.tr()),
                         items: sensorTypes.keys
                             .map<DropdownMenuItem<SensorType>>((SensorType key) {
                           return DropdownMenuItem<SensorType>(
@@ -88,13 +87,13 @@ class SensorConfigSheetState extends ConsumerState<SensorConfigSheet> {
                       ),
                       TextFormField(
                         controller: _nameCtrl,
-                        decoration: const InputDecoration(labelText: 'Sensor Name'),
+                        decoration: InputDecoration(labelText: 'sensorConfigForm.sensorName'.tr()),
                       ),
                       Row(children: <Widget>[
                         Expanded(
                           child: TextFormField(
                             controller: _hostCtrl,
-                            decoration: const InputDecoration(labelText: 'Host'),
+                            decoration: InputDecoration(labelText: 'sensorConfigForm.host'.tr()),
                           ),
                         ),
                         const SizedBox(
@@ -103,7 +102,7 @@ class SensorConfigSheetState extends ConsumerState<SensorConfigSheet> {
                         Expanded(
                           child: TextFormField(
                             controller: _portCtrl,
-                            decoration: const InputDecoration(labelText: 'Port'),
+                            decoration: InputDecoration(labelText: 'sensorConfigForm.port'.tr()),
                           ),
                         ),
                       ]),
@@ -111,7 +110,7 @@ class SensorConfigSheetState extends ConsumerState<SensorConfigSheet> {
                         Expanded(
                           child: TextFormField(
                             controller: _usernameCtrl,
-                            decoration: const InputDecoration(labelText: 'Username'),
+                            decoration: InputDecoration(labelText: 'sensorConfigForm.username'.tr()),
                           ),
                         ),
                         const SizedBox(
@@ -122,7 +121,7 @@ class SensorConfigSheetState extends ConsumerState<SensorConfigSheet> {
                             obscureText: _obscurePassword,
                             controller: _passwordCtrl,
                             decoration: InputDecoration(
-                                labelText: 'Password',
+                                labelText: 'sensorConfigForm.password'.tr(),
                                 suffixIcon: IconButton(
                                     icon: Icon(_obscurePassword ? Icons.visibility_off : Icons.visibility),
                                     onPressed: () {
@@ -151,9 +150,9 @@ class SensorConfigSheetState extends ConsumerState<SensorConfigSheet> {
                                     // Show snackbar
                                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                         content:
-                                            Text("Sensor \"${_nameCtrl.text}\" saved!")));
+                                            Text('messages.sensorConfigSaved'.tr(namedArgs: {'sensorName': _nameCtrl.text}))));
                                   },
-                                  child: const Text('Save'))),
+                                  child: const Text('buttons.save').tr())),
                           const SizedBox(
                             width: 8,
                           ),
@@ -162,7 +161,7 @@ class SensorConfigSheetState extends ConsumerState<SensorConfigSheet> {
                                   onPressed: () {
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Cancel'))),
+                                  child: const Text('buttons.cancel').tr())),
                         ],
                       )
                     ],
