@@ -11,16 +11,24 @@
     "noSensorsConfigured": "No sensors have been configured.",
     "sensorConfigSaved": "Sensor \"{sensorName}\" saved!"
   },
+  "errors": {
+    "cannotConnect": "Απρόσιτος",
+    "deviceKeyMissing": "{key} λείπει"
+  },
   "buttons": {
-    "save": "Save",
-    "cancel": "Cancel"
+    "save": "Αποθήκευση",
+    "cancel": "Ακύρωση"
   },
   "sensorConfigForm": {
-    "sensorType": "Sensor Type",
-    "sensorName": "Sensor Name",
-    "host": "Host",
-    "port": "Port",
-    "username": "Username",
-    "password": "Password"
+    "sensorType": "Τύπος Αισθητήρα",
+    "sensorName": "Όνομα Αισθητήρα",
+    "host": "Διακομιστής (Host)",
+    "port": "Θύρα (Port)",
+    "username": "Όνομα Χρήστη",
+    "password": "Κωδικός"
+  },
+  "sensorDetails": {
+    "host": "Διακομιστής: {host}",
+    "withCredentials": "Με Πιστοποιητικά ({username})"
   }
 }

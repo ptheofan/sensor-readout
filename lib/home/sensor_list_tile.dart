@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:insta_sensors/home/gauge_vindrikthing.dart';
@@ -21,14 +22,20 @@ class SensorListTile extends ConsumerWidget {
       trailing: values.when(
           loading: () => const CircularProgressIndicator(),
           error: (err, stack) {
-            return const Icon(Icons.error_outline_rounded, color: Colors.red);
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text('errors.cannotConnect').tr(),
+                const Icon(Icons.error_outline_rounded, color: Colors.red, size: 40,),
+              ],
+            );
           },
           data: (v) {
             if (v.pm2 < 0) {
-              return const Text('Unreadable');
+              return const Text('errors.deviceKeyMissing').tr(namedArgs: {'key': 'pm2.5'});
             } else {
               return SizedBox(
-                width: 100,
+                width: 40,
                 child: GaugeVindrikthing(radialNeedlePointer: NeedlePointer(
                   value: v.pm2.toDouble(),
                 )),

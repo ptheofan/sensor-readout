@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -25,6 +26,7 @@ class SensorDetailsState extends ConsumerState<SensorDetails>
 
     final values =
         ref.watch(sensorValuesNotifierProviderFamily(selectedSensor.uid));
+
     return Stack(alignment: Alignment.topRight, children: [
       Padding(
         padding: const EdgeInsets.only(top: 30),
@@ -43,29 +45,44 @@ class SensorDetailsState extends ConsumerState<SensorDetails>
                     style: Theme.of(context).textTheme.headline6),
                 Text(sensorTypes[selectedSensor.type]!,
                     style: Theme.of(context).textTheme.subtitle1),
-                SizedBox(
-                  height: MediaQuery.of(context).size.width * 0.9 + 50,
-                  child: Column(
-                    children: [
-                      const SizedBox(
-                        height: 30,
+                if (values.hasError)
+                  SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const Icon(Icons.error_outline_rounded,
+                              color: Colors.red, size: 40),
+                          Text('errors.cannotConnect', style: Theme.of(context).textTheme.headline6).tr(),
+                        ],
                       ),
-                      GaugeVindrikthing(
-                          miniMode: false,
-                          radialNeedlePointer: NeedlePointer(
-                            value: values.value?.pm2.toDouble() ?? 0,
-                          )),
-                    ],
+                    ),
                   ),
-                ),
+                if (values.isLoading) const CircularProgressIndicator(),
+                if (values.hasValue)
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.9 + 50,
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        GaugeVindrikthing(
+                            miniMode: false,
+                            radialNeedlePointer: NeedlePointer(
+                              value: values.value?.pm2.toDouble() ?? 0,
+                            )),
+                      ],
+                    ),
+                  ),
                 Row(
                   children: [
                     Expanded(
-                      child: Text(
-                          'Host ${selectedSensor.host}:${selectedSensor.port}'),
+                      child: const Text('sensorDetails.host').tr(namedArgs: {'host': selectedSensor.host, 'port': selectedSensor.port.toString()}),
                     ),
                     if (selectedSensor.username.isNotEmpty)
-                      Text('With credentials (${selectedSensor.username})'),
+                      const Text('sensorDetails.withCredentials').tr(namedArgs: {'username': selectedSensor.username}),
                   ],
                 ),
               ],

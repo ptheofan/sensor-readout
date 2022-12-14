@@ -41,7 +41,6 @@ dependencies:
   shared_preferences: ^2.0.15
   json_annotation: ^4.7.0
   riverpod_annotation: ^1.0.6
-#  flutter_secure_storage: ^7.0.0
   localstorage: ^4.0.0+1
   uuid: ^3.0.7
   flutter_secure_storage: ^7.0.0
@@ -50,6 +49,7 @@ dependencies:
   easy_localization: ^3.0.1
   easy_localization_loader: ^1.0.1+1
   expandable_bottom_sheet: ^1.1.1+1
+  icons_launcher: ^2.0.6
 
 
 dev_dependencies:
@@ -111,20 +111,11 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
 
-flutter_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/vindrinkthing.png"
-  min_sdk_android: 21 # android min sdk min:16, default 21
-  web:
-    generate: true
-    image_path: "assets/vindrinkthing.png"
-    background_color: "#ffffff"
-    theme_color: "#ffffff"
-  windows:
-    generate: true
-    image_path: "assets/vindrinkthing.png"
-    icon_size: 48 # min:48, max:256, default: 48
-  macos:
-    generate: true
-    image_path: "assets/vindrinkthing.png"
+# https://pub.dev/packages/icons_launcher
+icons_launcher:
+  image_path: 'assets/vindrinkthing.png'
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true

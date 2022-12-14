@@ -8,6 +8,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
+  EasyLocalization.logger.enableLevels = [];
   runApp(EasyLocalization(
       assetLoader: JsonAssetLoader(),
       supportedLocales: const [Locale('en'), Locale('el')],
@@ -18,7 +19,6 @@ void main() async {
 class App extends ConsumerWidget {
   const App({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(

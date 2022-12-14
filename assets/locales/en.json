@@ -11,6 +11,10 @@
     "noSensorsConfigured": "No sensors have been configured.",
     "sensorConfigSaved": "Sensor \"{sensorName}\" saved!"
   },
+  "errors": {
+    "cannotConnect": "Unreachable",
+    "deviceKeyMissing": "{key} missing"
+  },
   "buttons": {
     "save": "Save",
     "cancel": "Cancel"
@@ -22,5 +26,9 @@
     "port": "Port",
     "username": "Username",
     "password": "Password"
+  },
+  "sensorDetails": {
+    "host": "Host: {host}",
+    "withCredentials": "With Credentials ({username})"
   }
 }
